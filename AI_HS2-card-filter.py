@@ -6,6 +6,14 @@ import os,shutil,time
                 StudioNEOV2
                 AIS_Clothes
 '''
+def display_title():
+    print('''\n    ***************************************************************************************************
+    *                                                                                                 *
+    *          Automate filter AI/HS2 character, scene, coordinate                                    *
+    *          if not enter directory to work, it will work in the same folder as this script         *
+    *                                                                                                 *
+    ***************************************************************************************************\n''')
+
 def get_started(directory):
     flag = ''
     create_folder(directory)
@@ -50,23 +58,18 @@ def classify_image_type(file_to_test):
             else: # just a picture
                 return "other"
 
+
 def create_folder(directory):
-    if not os.path.isdir(os.path.join(directory,'card')):
-        os.mkdir(os.path.join(directory,'card'))
-    if not os.path.isdir(os.path.join(directory,'scene')):
-        os.mkdir(os.path.join(directory,'scene'))
-    if not os.path.isdir(os.path.join(directory,'coordinate')):
-        os.mkdir(os.path.join(directory,'coordinate'))
-    if not os.path.isdir(os.path.join(directory,'other')):
-        os.mkdir(os.path.join(directory,'other'))
+    folder_array = ['card','scene','coordinate','other']
+    for item in folder_array:
+        path = os.path.join(directory,item)
+        if not os.path.isdir(path):
+            os.mkdir(path)
+
 def main():
-    print('''
-          Automate filter Koikatsu character, scene, coordinate
-          if not enter directory to work, it will work in the same folder as this script
-          ''')
+    display_title()
     dir_to_do_work = input('directory: ')
     if dir_to_do_work =='':
-        #dir_to_do_work = r'E:\Download\vivaldi-game download\illusion card filter'
         dir_to_do_work = os.getcwd()
     get_started(dir_to_do_work)
 if __name__ == "__main__":
