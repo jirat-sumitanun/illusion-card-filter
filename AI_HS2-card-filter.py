@@ -36,7 +36,8 @@ def get_started(directory):
         #elif not item.endswith('.png') and not os.path.isdir(os.path.join(directory,item)):
         elif item.endswith('.jpg'):
             try:
-                print(os.path.splitext(item))
+                #print(os.path.splitext(item))
+                file_in_progress = os.path.join(directory,item)
                 dest = os.path.join(directory,'other',item)
                 shutil.move(file_in_progress,dest)
             except Exception as e:
