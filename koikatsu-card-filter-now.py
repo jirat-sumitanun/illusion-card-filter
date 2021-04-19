@@ -2,15 +2,16 @@ import os,shutil,time
 
 '''
                 text = b"IEND\xaeB`\x82"
-                AIS_Chara
-                StudioNEOV2
-                AIS_Clothes
+                KStudio
+                KoiKatuChara
+                KoiKatuClothes
 '''
 def display_title():
     print('''\n    ***************************************************************************************************
     *                                                                                                 *
-    *                     Automate filter AI/HS2 character, scene, coordinate                         *
-    *          if not enter directory to work, it will work in the same folder as this script         *
+    *                                                                                                 *
+    *                  Automate filter Koikatsu character, scene, coordinate                          *
+    *                                                                                                 *
     *                                                                                                 *
     ***************************************************************************************************\n''')
 
@@ -56,19 +57,19 @@ def classify_image_type(file_to_test):
             return "other"
 
 def check_is_scene(card_data):
-    if card_data.find(b'StudioNEOV2') != -1:
+    if card_data.find(b'KStudio') != -1:
         return True
     else:
         return False
 
 def check_is_chara(card_data):
-    if card_data.find(b"AIS_Chara") != -1:
+    if card_data.find(b"KoiKatuChara") != -1:
         return True
     else:
         return False
 
 def check_is_clothes(card_data):
-    if card_data.find(b"AIS_Clothes") != -1:
+    if card_data.find(b"KoiKatuClothes") != -1:
         return True
     else:
         return False
@@ -82,10 +83,7 @@ def create_folder(directory):
 
 def main():
     display_title()
-    dir_to_do_work = input('directory: ')
-    dir_to_do_work = dir_to_do_work.replace('\"','')
-    if dir_to_do_work =='':
-        dir_to_do_work = os.getcwd()
+    dir_to_do_work = os.getcwd()
     get_started(dir_to_do_work)
 if __name__ == "__main__":
     main()

@@ -5,14 +5,11 @@ import os,shutil,time
                 KStudio
                 KoiKatuChara
                 KoiKatuClothes
-                AIS_Chara
-                StudioNEOV2
-                AIS_Clothes
 '''
 def display_title():
     print('''\n    ***************************************************************************************************
     *                                                                                                 *
-    *          Automate filter AI/HS2 character, scene, coordinate                                    *
+    *                     Automate filter Koikatsu character, scene, coordinate                       *
     *          if not enter directory to work, it will work in the same folder as this script         *
     *                                                                                                 *
     ***************************************************************************************************\n''')
@@ -49,18 +46,32 @@ def get_started(directory):
 def classify_image_type(file_to_test):
     with open(file_to_test, 'rb') as readImage:
         s = readImage.read()
-        v1 = s.find(b"KStudio") # check koikatsu scene
-        if v1 != -1:
-            return "scene" # koikatsu scene => True
-        elif v1 == -1: # Koikatsu scene => False
-            v2 = s.find(b"KoiKatuChara") # check koikatsu character card
-            v3 = s.find(b"KoiKatuClothes") # check koikatsu coordinate (clothes)
-            if v2 != -1:
-                return "chara" # koikatsu character card => True
-            elif v3 != -1:
-                return "clothes" # koikatsu clothes => True
-            elif v1 == -1 and v2 == -1 and v3 == -1: # just a picture
-                return "other"
+        if check_is_scene(s):
+            return "scene"
+        elif check_is_chara(s):
+            return "chara"
+        elif check_is_clothes(s):
+            return "clothes"
+        else:
+            return "other"
+
+def check_is_scene(card_data):
+    if card_data.find(b'KStudio') != -1:
+        return True
+    else:
+        return False
+
+def check_is_chara(card_data):
+    if card_data.find(b"KoiKatuChara") != -1:
+        return True
+    else:
+        return False
+
+def check_is_clothes(card_data):
+    if card_data.find(b"KoiKatuClothes") != -1:
+        return True
+    else:
+        return False
 
 def create_folder(directory):
     folder_array = ['card','scene','coordinate','other']
@@ -72,6 +83,7 @@ def create_folder(directory):
 def main():
     display_title()
     dir_to_do_work = input('directory: ')
+    dir_to_do_work = dir_to_do_work.replace('\"','')
     if dir_to_do_work =='':
         dir_to_do_work = os.getcwd()
     get_started(dir_to_do_work)
