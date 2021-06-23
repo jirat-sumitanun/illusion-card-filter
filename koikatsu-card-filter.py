@@ -23,6 +23,8 @@ def get_started(directory):
             flag = classify_image_type(file_in_progress)
             if flag == 'chara':
                 dest = os.path.join(directory,'card',item)
+            elif flag == 'chara_sunshine':
+                dest = os.path.join(directory,'card_sunshine',item)
             elif flag == 'scene':
                 dest = os.path.join(directory,'scene',item)
             elif flag == 'clothes':
@@ -48,6 +50,8 @@ def classify_image_type(file_to_test):
         s = readImage.read()
         if check_is_scene(s):
             return "scene"
+        elif check_is_chara_sunshine(s):
+            return "chara_sunshine"
         elif check_is_chara(s):
             return "chara"
         elif check_is_clothes(s):
@@ -58,23 +62,25 @@ def classify_image_type(file_to_test):
 def check_is_scene(card_data):
     if card_data.find(b'KStudio') != -1:
         return True
-    else:
-        return False
+    return False
 
 def check_is_chara(card_data):
     if card_data.find(b"KoiKatuChara") != -1:
         return True
-    else:
-        return False
+    return False
 
 def check_is_clothes(card_data):
     if card_data.find(b"KoiKatuClothes") != -1:
         return True
-    else:
-        return False
+    return False
+
+def check_is_chara_sunshine(card_data):
+    if card_data.find(b"KoiKatuCharaSun") != -1:
+        return True
+    return False
 
 def create_folder(directory):
-    folder_array = ['card','scene','coordinate','other']
+    folder_array = ['card','card_sunshine','scene','coordinate','other']
     for item in folder_array:
         path = os.path.join(directory,item)
         if not os.path.isdir(path):
