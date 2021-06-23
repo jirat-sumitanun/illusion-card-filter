@@ -14,7 +14,7 @@ def get_started(directory):
     create_folder(directory,'koikatsu')
     for item in os.listdir(directory):
         file_type_flag = classify_file_type(directory,item)
-        
+
         if file_type_flag == "png":
             card_flag = classify_card_type(directory,item)
             if not card_flag == "chara":
